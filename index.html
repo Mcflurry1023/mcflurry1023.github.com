@@ -23,7 +23,10 @@
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html { 
+      scroll-behavior: smooth; 
+      
+    }
 
     body {
       margin: 0;
@@ -109,13 +112,27 @@
       text-transform: uppercase;
     }
 
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--background);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
     .main-nav {
+      width: min(var(--page-width), calc(100% - 48px));
+      margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
       gap: 0 24px;
       padding: 13px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
     }
 
     .main-nav a {
@@ -128,6 +145,7 @@
 
     .main-nav a:first-child { color: var(--primary); }
 
+
     /* ---------- 4. BREAKING / EDITOR'S NOTE STRIP ---------- */
     .news-strip {
       display: flex;
@@ -136,6 +154,7 @@
       padding: 17px 0 5px;
       color: var(--muted);
       font-size: 0.78rem;
+      border-radius: 3px;
     }
 
     .news-strip strong {
@@ -146,6 +165,7 @@
       font-size: 0.63rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      border-radius: 3px;
     }
 
     /* ---------- 5. MAIN FEATURE AND TOP STORIES ---------- */
@@ -187,7 +207,7 @@
       max-width: 700px;
       margin: 0;
       color: white;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: "Times New Roman";
       font-size: clamp(2.1rem, 5vw, 3.6rem);
       text-shadow: 2px 2px 5px var(--background);
       line-height: 1.02;
@@ -469,20 +489,20 @@
 </head>
 
 <body>
-  <!-- ---------- TOP STRIP: EDIT THE TWO SHORT MESSAGES ---------- -->
+  <!-- tagline-->
   <div class="top-strip">
     <div class="container">
       <span>The independent news desk</span>
-      <span>Read closely. Think critically.</span>
+      <span>TAGLINE. TAGLINE.</span>
     </div>
   </div>
 
-  <!-- ---------- HEADER: CHANGE THE PUBLICATION NAME HERE ---------- -->
+  <!--  change publication nuame  -->
   <header class="site-header container">
     <div class="masthead">
       <div>
-        <h1 class="site-name">THE CURRENT<span>.</span></h1>
-        <p class="tagline">Independent news · People · Perspectives</p>
+        <h1 class="site-name">THE NAME<span>.</span></h1>
+        <p class="tagline">DESC · DESC · DESC</p>
       </div>
       <div class="issue-info">
         Your daily briefing<br>
@@ -490,26 +510,29 @@
       </div>
     </div>
 
-    <!-- Navigation links jump to sections on this page. -->
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="#home">Home</a>
+    <!-- sticky navigation -->
+  <div class="sticky-nav">
+    <nav class="main-nav container" aria-label="Main navigation">
+      <a href="#home" aria-current="page">Home</a>
       <a href="#latest">Latest</a>
       <a href="#local">Local</a>
       <a href="#national">National</a>
       <a href="#world">World</a>
       <a href="#science">Science</a>
       <a href="#opinion">Opinion</a>
+      <a href="#about">About</a>
     </nav>
+  </div>
 
-    <!-- Replace this with an actual breaking-news update. -->
+    <!-- replace with actual breaking news (latest article?) -->
     <div class="news-strip">
       <strong>In focus</strong>
       <span>Use this space for a major developing story or your newsroom's top update.</span>
     </div>
-  </header>
+  
 
   <main class="container" id="home">
-    <!-- ---------- FEATURED ARTICLE: MAIN HEADLINE ---------- -->
+    <!-- editorial article by EIC-->
     <p class="eyebrow">The front page · Editor's pick</p>
 
     <div class="feature-layout">
@@ -526,7 +549,7 @@
         </div>
       </article>
 
-      <!-- ---------- TOP STORIES: EDIT OR DUPLICATE EACH ARTICLE ---------- -->
+      <!-- ---------- our best 3 articles (writers/eic picks) ---------- -->
       <aside class="top-stories">
         <div class="top-stories-heading">
           <h2>Top stories</h2>
@@ -534,42 +557,42 @@
         </div>
 
         <article class="top-story">
-          <span class="top-story-number">01</span>
+          <span class="top-story-number">01</span> <!-- change best article to news/feature/article/opinion-->
           <div>
-            <small>Local · 3 min read</small>
-            <h3><a href="#">Your second headline goes here</a></h3>
-            <p>Add a one-sentence summary of this report.</p>
+            <small>Best Article · 3 min read</small>
+            <h3><a href="#">headline</a></h3>
+            <p>TOPIC DESCRIPTION - 5w & 1H - SHORT - 2 SENTENCES MAX</p>
           </div>
         </article>
 
         <article class="top-story">
           <span class="top-story-number">02</span>
           <div>
-            <small>National · 4 min read</small>
-            <h3><a href="#">Your third headline goes here</a></h3>
-            <p>Give readers the key detail in a single sentence.</p>
+            <small>Best Article · 4 min read</small> <!-- change best article to news/feature/article/opinion-->
+            <h3><a href="#">headline</a></h3>
+            <p>TOPIC DESCRIPTION - 5w & 1H - SHORT - 2 SENTENCES MAX</p>
           </div>
         </article>
 
         <article class="top-story">
-          <span class="top-story-number">03</span>
+          <span class="top-story-number">03</span> <!-- change best article to news/feature/article/opinion-->
           <div>
             <small>Science · 2 min read</small>
-            <h3><a href="#">Your fourth headline goes here</a></h3>
-            <p>Keep this summary short, clear, and informative.</p>
+            <h3><a href="#">headline</a></h3>
+            <p>TOPIC DESCRIPTION - 5w & 1H - SHORT - 2 SENTENCES MAX</p>
           </div>
         </article>
       </aside>
     </div>
 
-    <!-- ---------- LATEST ARTICLES: DUPLICATE A STORY-CARD TO ADD MORE ---------- -->
+    <!-- latest articles by date from print team-->
     <section class="news-section" id="latest">
       <div class="section-heading">
         <div>
           <p class="eyebrow">Fresh from the newsroom</p>
           <h2>Latest stories</h2>
         </div>
-        <a class="view-all" href="#latest">Explore all stories ↗</a>
+        <a class="view-all" href="#latest">Explore all stories ↗</a> <!-- all articles; arrange by date-->
       </div>
 
       <div class="story-grid">
@@ -579,8 +602,8 @@
             <div class="story-image"><span>Local</span></div>
             <div class="story-content">
               <small>Community · 4 min read</small>
-              <h3>Local news headline goes here</h3>
-              <p>Summarize the issue, the people involved, and its effect on the community.</p>
+              <h3>headline</h3>
+              <p>TOPIC DESCRIPTION - 5w & 1H - SHORT - 2 SENTENCES MAX</p>
               <div class="story-byline">Reporter Name · Date</div>
             </div>
           </a>
@@ -592,8 +615,8 @@
             <div class="story-image"><span>National</span></div>
             <div class="story-content">
               <small>Government · 5 min read</small>
-              <h3>National news headline goes here</h3>
-              <p>Explain the most important development without giving away the entire story.</p>
+              <h3>headline</h3>
+              <p>TOPIC DESCRIPTION - 5w & 1H - SHORT - 2 SENTENCES MAX</p>
               <div class="story-byline">Reporter Name · Date</div>
             </div>
           </a>
@@ -605,8 +628,8 @@
             <div class="story-image"><span>World</span></div>
             <div class="story-content">
               <small>International · 3 min read</small>
-              <h3>World news headline goes here</h3>
-              <p>Provide context so readers understand why this international story matters.</p>
+              <h3>headline</h3>
+              <p>TOPIC DESCRIPTION - 5w & 1H - SHORT - 2 SENTENCES MAX</p>
               <div class="story-byline">Reporter Name · Date</div>
             </div>
           </a>
@@ -619,20 +642,20 @@
       <section class="opinion-panel" id="opinion">
         <p class="eyebrow">The opinion desk</p>
         <h2>Ideas deserve a closer look.</h2>
-        <p>Feature editorials, columns, and reader perspectives. Clearly distinguish opinion from reported news.</p>
+        <p>Feature editorials, columns, and reader perspectives. Make sure description is very clear from news.</p>
       </section>
 
       <section class="about-panel" id="science">
         <p class="eyebrow">About the publication</p>
         <h2>Journalism with purpose.</h2>
-        <p>Introduce your newsroom, its mission, editorial standards, and the people behind the stories.</p>
+        <p>Intro.</p> <!-- introduction; mission; policies; refer to rappler introduction/about us-->
       </section>
     </div>
 
-    <!-- ---------- FOOTER: UPDATE COPYRIGHT AND CONTACT ADDRESS ---------- -->
+    <!-- footer--> <!-- idk what to put here for now-->
     <footer class="site-footer">
       <div>
-        <div class="footer-brand">THE CURRENT.</div>
+        <div class="footer-brand">THE NAME.</div>
         <div>© 2026 The Current. All rights reserved.</div>
       </div>
       <div class="footer-links">
