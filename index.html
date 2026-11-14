@@ -8,7 +8,7 @@
 
 
   <style>
-    /*COLORS AND GLOBAL SETTINGS*/
+    /* --colors and global settings--*/
     :root {
       --primary: #df571d;   /*main headlines and emphasis*/
       --accent: #70b8b0;    /*labels, links, small highlights*/
@@ -53,7 +53,7 @@
       text-transform: uppercase;
     }
 
-    /* ---------- 2. TOP STRIP ---------- */
+    /* --2. top strip-- */
     .top-strip {
       padding: 9px 0;
       background: var(--primary);
@@ -71,7 +71,7 @@
       flex-wrap: wrap;
     }
 
-    /* ---------- 3. HEADER AND NAVIGATION ---------- */
+    /* --3. header amd navigation-- */
     .site-header { padding-top: 28px; }
 
     .masthead {
@@ -146,7 +146,7 @@
     .main-nav a:first-child { color: var(--primary); }
 
 
-    /* ---------- 4. BREAKING / EDITOR'S NOTE STRIP ---------- */
+    /* --4. breaking news strip-- */
     .news-strip {
       display: flex;
       align-items: center;
@@ -168,7 +168,7 @@
       border-radius: 3px;
     }
 
-    /* ---------- 5. MAIN FEATURE AND TOP STORIES ---------- */
+    /* --5. main feature cards-- */
     main { padding: 30px 0 55px; }
 
     .feature-layout {
@@ -305,7 +305,7 @@
       font-size: 0.75rem;
     }
 
-    /* ---------- 6. LATEST NEWS CARDS ---------- */
+    /* --6. latest news cards-- */
     .news-section { margin-top: 50px; }
 
     .section-heading {
@@ -354,8 +354,7 @@
       border-color: var(--accent);
     }
 
-    /* These colored panels are image-free placeholders.
-       To use a photo, replace the background declaration with:
+    /* replace background color with this attribute:
        background: url('YOUR-IMAGE-LINK') center/cover no-repeat;
     */
     .story-image {
@@ -409,7 +408,7 @@
       text-transform: uppercase;
     }
 
-    /* ---------- 7. OPINION AND ABOUT PANELS ---------- */
+    /* --7. opinion and about-- */
     .bottom-panels {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
@@ -448,7 +447,7 @@
 
     .about-panel p:last-child { color: var(--muted); }
 
-    /* ---------- 8. FOOTER ---------- */
+    /* --8. footer-- */
     .site-footer {
       display: flex;
       align-items: center;
@@ -471,7 +470,7 @@
 
     .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
 
-    /* ---------- 9. MOBILE LAYOUT ---------- */
+    /* --9 - phone layout-- */
     @media (max-width: 760px) {
       .container { width: min(100% - 32px, var(--page-width)); }
       .issue-info { display: none; }
@@ -500,7 +499,7 @@
     </div>
   </div>
 
-  <!--  change publication nuame  -->
+  <!--  change publication name-->
   <header class="site-header container">
     <div class="masthead">
       <div>
@@ -551,7 +550,7 @@
         </div>
       </article>
 
-      <!-- ---------- our best 3 articles (writers/eic picks) ---------- -->
+      <!-- our best 3 articles (writers/eic picks)-->
       <aside class="top-stories">
         <div class="top-stories-heading">
           <h2>Top stories</h2>
@@ -598,7 +597,7 @@
       </div>
 
       <div class="story-grid">
-        <!-- ARTICLE CARD 1 -->
+        <!-- article card 2-->
         <article class="story-card" id="type">
           <a href="#">
             <div class="story-image"><span>type</span></div>
@@ -611,7 +610,7 @@
           </a>
         </article>
 
-        <!-- ARTICLE CARD 2 -->
+        <!-- article card 2-->
         <article class="story-card" id="type">
           <a href="#">
             <div class="story-image"><span>type</span></div>
@@ -624,7 +623,7 @@
           </a>
         </article>
 
-        <!-- ARTICLE CARD 3 -->
+        <!-- article card 2-->
         <article class="story-card" id="type">
           <a href="#">
             <div class="story-image"><span>type</span></div>
@@ -639,17 +638,17 @@
       </div>
     </section>
 
-    <!-- ---------- OPINION AND ABOUT ---------- -->
+    <!-- opinion and about-->
     <div class="bottom-panels">
       <section class="opinion-panel" id="type">
         <p class="eyebrow">The opinion desk</p>
-        <h2>Ideas deserve a closer look.</h2>
-        <p>Feature editorials, columns, and reader perspectives. Make sure description is very clear from news.</p>
+        <h2>Tagline.</h2>
+        <p>Feature editorials, opinion. Make sure description is very clear from news.</p>
       </section>
 
       <section class="about-panel" id="type">
         <p class="eyebrow">About the publication</p>
-        <h2>Journalism with purpose.</h2>
+        <h2>tagline.</h2>
         <p>Intro.</p> <!-- introduction; mission; policies; refer to rappler introduction/about us-->
       </section>
     </div>
@@ -658,7 +657,7 @@
     <footer class="site-footer">
       <div>
         <div class="footer-brand">THE NAME.</div>
-        <div>© 2026 The Current. All rights reserved.</div>
+        <div>© 2026 The Name. All rights reserved.</div>
       </div>
       <div class="footer-links">
         <a href="#home">Back to top ↑</a>
