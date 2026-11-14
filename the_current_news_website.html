@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Current — News</title>
+
+
+
+  <style>
+    /*COLORS AND GLOBAL SETTINGS*/
+    :root {
+      --primary: #df571d;   /*main headlines and emphasis*/
+      --accent: #70b8b0;    /*labels, links, small highlights*/
+      --background: #191f1f;
+      --surface: #202727;
+      --surface-dark: #242929;
+      --text: #f5f2ef;
+      --muted: #b9c1be;
+      --border: rgba(255, 255, 255, 0.14);
+      --page-width: 1400px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent); }
+
+    .container {
+      width: min(var(--page-width), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- 2. TOP STRIP ---------- */
+    .top-strip {
+      padding: 9px 0;
+      background: var(--primary);
+      color: #261e22;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .top-strip .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ---------- 3. HEADER AND NAVIGATION ---------- */
+    .site-header { padding-top: 28px; }
+
+    .masthead {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 23px;
+    }
+
+    .site-name {
+      margin: 0;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.07em;
+      line-height: 0.95;
+    }
+
+    .site-name span { color: var(--primary); }
+
+    .tagline {
+      margin: 12px 0 0;
+      color: var(--accent);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .issue-info {
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .main-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 24px;
+      padding: 13px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .main-nav a {
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .main-nav a:first-child { color: var(--primary); }
+
+    /* ---------- 4. BREAKING / EDITOR'S NOTE STRIP ---------- */
+    .news-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 17px 0 5px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .news-strip strong {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      background: var(--accent);
+      color: #1d2928;
+      font-size: 0.63rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- 5. MAIN FEATURE AND TOP STORIES ---------- */
+    main { padding: 30px 0 55px; }
+
+    .feature-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.8fr);
+      gap: 22px;
+    }
+
+    .main-feature {
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      align-items: start;
+      padding: clamp(24px, 4vw, 44px);
+      overflow: hidden;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 82% 20%, transparent 0 95px, rgba(255,255,255,.2) 96px 97px, transparent 98px 145px, rgba(255,255,255,.16) 146px 147px, transparent 148px),
+        linear-gradient(135deg, #704052, var(--primary) 52%, var(--accent));
+    }
+
+    .feature-label {
+      margin-bottom: 14px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--background);
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .main-feature h2 {
+      max-width: 700px;
+      margin: 0;
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.1rem, 5vw, 3.6rem);
+      text-shadow: 2px 2px 5px var(--background);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .main-feature p {
+      max-width: 620px;
+      margin: 16px 0 0;
+      color: rgba(255,255,255,.92);
+      font-size: 0.95rem;
+    }
+
+    .story-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 17px;
+      margin-top: 20px;
+      color: rgba(255,255,255,.82);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .top-stories {
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .top-stories h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+    }
+
+    .top-stories-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .top-stories-heading span {
+      color: var(--primary);
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .top-story {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 12px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .top-story:last-child { padding-bottom: 0; border-bottom: 0; }
+
+    .top-story-number {
+      color: var(--primary);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.6rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .top-story small, .story-card small {
+      color: var(--accent);
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .top-story h3 {
+      margin: 5px 0 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.1rem;
+      line-height: 1.2;
+    }
+
+    .top-story p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    /* ---------- 6. LATEST NEWS CARDS ---------- */
+    .news-section { margin-top: 50px; }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 19px;
+      padding-bottom: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 2.35rem);
+    }
+
+    .section-heading .eyebrow { margin-bottom: 5px; }
+
+    .view-all {
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .story-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .story-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    /* These colored panels are image-free placeholders.
+       To use a photo, replace the background declaration with:
+       background: url('YOUR-IMAGE-LINK') center/cover no-repeat;
+    */
+    .story-image {
+      min-height: 150px;
+      display: flex;
+      align-items: end;
+      padding: 13px;
+      background: linear-gradient(135deg, #4a5d5b, var(--accent));
+    }
+
+    .story-card:nth-child(2) .story-image {
+      background: linear-gradient(135deg, #6d3548, var(--primary));
+    }
+
+    .story-card:nth-child(3) .story-image {
+      background: linear-gradient(135deg, #3f4c59, #8a9ca8);
+    }
+
+    .story-image span {
+      padding: 5px 8px;
+      border-radius: 2px;
+      background: rgba(36,41,41,.88);
+      color: white;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .story-content { padding: 17px; }
+
+    .story-content h3 {
+      margin: 7px 0 9px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      line-height: 1.12;
+    }
+
+    .story-content p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .story-byline {
+      margin-top: 15px;
+      color: #929d99;
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- 7. OPINION AND ABOUT PANELS ---------- */
+    .bottom-panels {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      margin-top: 50px;
+    }
+
+    .opinion-panel, .about-panel {
+      padding: 25px;
+      border-radius: 13px;
+    }
+
+    .opinion-panel {
+      background: var(--primary);
+      color: #2d2227;
+    }
+
+    .about-panel {
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .opinion-panel .eyebrow { color: #512b39; }
+
+    .bottom-panels h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.9rem;
+      line-height: 1.1;
+    }
+
+    .bottom-panels p:last-child {
+      margin-bottom: 0;
+      font-size: 0.82rem;
+    }
+
+    .about-panel p:last-child { color: var(--muted); }
+
+    /* ---------- 8. FOOTER ---------- */
+    .site-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 45px;
+      padding: 23px 0 30px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .footer-brand {
+      color: var(--primary);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+
+    /* ---------- 9. MOBILE LAYOUT ---------- */
+    @media (max-width: 760px) {
+      .container { width: min(100% - 32px, var(--page-width)); }
+      .issue-info { display: none; }
+      .feature-layout, .bottom-panels { grid-template-columns: 1fr; }
+      .main-feature { min-height: 370px; }
+      .story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .main-nav { gap: 10px 16px; }
+    }
+
+    @media (max-width: 500px) {
+      .story-grid { grid-template-columns: 1fr; }
+      .main-feature { min-height: 330px; }
+      .news-strip { align-items: flex-start; }
+      .section-heading { align-items: start; }
+      .view-all { padding-top: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ---------- TOP STRIP: EDIT THE TWO SHORT MESSAGES ---------- -->
+  <div class="top-strip">
+    <div class="container">
+      <span>The independent news desk</span>
+      <span>Read closely. Think critically.</span>
+    </div>
+  </div>
+
+  <!-- ---------- HEADER: CHANGE THE PUBLICATION NAME HERE ---------- -->
+  <header class="site-header container">
+    <div class="masthead">
+      <div>
+        <h1 class="site-name">THE CURRENT<span>.</span></h1>
+        <p class="tagline">Independent news · People · Perspectives</p>
+      </div>
+      <div class="issue-info">
+        Your daily briefing<br>
+        Volume 01 · Issue 01
+      </div>
+    </div>
+
+    <!-- Navigation links jump to sections on this page. -->
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#latest">Latest</a>
+      <a href="#local">Local</a>
+      <a href="#national">National</a>
+      <a href="#world">World</a>
+      <a href="#science">Science</a>
+      <a href="#opinion">Opinion</a>
+    </nav>
+
+    <!-- Replace this with an actual breaking-news update. -->
+    <div class="news-strip">
+      <strong>In focus</strong>
+      <span>Use this space for a major developing story or your newsroom's top update.</span>
+    </div>
+  </header>
+
+  <main class="container" id="home">
+    <!-- ---------- FEATURED ARTICLE: MAIN HEADLINE ---------- -->
+    <p class="eyebrow">The front page · Editor's pick</p>
+
+    <div class="feature-layout">
+      <article class="main-feature">
+        <span 
+        class="feature-label">Lead story
+        </span>
+        <h2>HEADLINE PLACEMENT</h2>
+        <p>TOPIC DESCRIPTION - 5w & 1H - SHORT - 2-3 SENTENCES MAX</p>
+        <div class="story-meta">
+          <span>Reporter Name</span>
+          <span>November X, 2026</span>
+          <span>X min read</span>
+        </div>
+      </article>
+
+      <!-- ---------- TOP STORIES: EDIT OR DUPLICATE EACH ARTICLE ---------- -->
+      <aside class="top-stories">
+        <div class="top-stories-heading">
+          <h2>Top stories</h2>
+          <span>Quick read</span>
+        </div>
+
+        <article class="top-story">
+          <span class="top-story-number">01</span>
+          <div>
+            <small>Local · 3 min read</small>
+            <h3><a href="#">Your second headline goes here</a></h3>
+            <p>Add a one-sentence summary of this report.</p>
+          </div>
+        </article>
+
+        <article class="top-story">
+          <span class="top-story-number">02</span>
+          <div>
+            <small>National · 4 min read</small>
+            <h3><a href="#">Your third headline goes here</a></h3>
+            <p>Give readers the key detail in a single sentence.</p>
+          </div>
+        </article>
+
+        <article class="top-story">
+          <span class="top-story-number">03</span>
+          <div>
+            <small>Science · 2 min read</small>
+            <h3><a href="#">Your fourth headline goes here</a></h3>
+            <p>Keep this summary short, clear, and informative.</p>
+          </div>
+        </article>
+      </aside>
+    </div>
+
+    <!-- ---------- LATEST ARTICLES: DUPLICATE A STORY-CARD TO ADD MORE ---------- -->
+    <section class="news-section" id="latest">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Fresh from the newsroom</p>
+          <h2>Latest stories</h2>
+        </div>
+        <a class="view-all" href="#latest">Explore all stories ↗</a>
+      </div>
+
+      <div class="story-grid">
+        <!-- ARTICLE CARD 1 -->
+        <article class="story-card" id="local">
+          <a href="#">
+            <div class="story-image"><span>Local</span></div>
+            <div class="story-content">
+              <small>Community · 4 min read</small>
+              <h3>Local news headline goes here</h3>
+              <p>Summarize the issue, the people involved, and its effect on the community.</p>
+              <div class="story-byline">Reporter Name · Date</div>
+            </div>
+          </a>
+        </article>
+
+        <!-- ARTICLE CARD 2 -->
+        <article class="story-card" id="national">
+          <a href="#">
+            <div class="story-image"><span>National</span></div>
+            <div class="story-content">
+              <small>Government · 5 min read</small>
+              <h3>National news headline goes here</h3>
+              <p>Explain the most important development without giving away the entire story.</p>
+              <div class="story-byline">Reporter Name · Date</div>
+            </div>
+          </a>
+        </article>
+
+        <!-- ARTICLE CARD 3 -->
+        <article class="story-card" id="world">
+          <a href="#">
+            <div class="story-image"><span>World</span></div>
+            <div class="story-content">
+              <small>International · 3 min read</small>
+              <h3>World news headline goes here</h3>
+              <p>Provide context so readers understand why this international story matters.</p>
+              <div class="story-byline">Reporter Name · Date</div>
+            </div>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ---------- OPINION AND ABOUT ---------- -->
+    <div class="bottom-panels">
+      <section class="opinion-panel" id="opinion">
+        <p class="eyebrow">The opinion desk</p>
+        <h2>Ideas deserve a closer look.</h2>
+        <p>Feature editorials, columns, and reader perspectives. Clearly distinguish opinion from reported news.</p>
+      </section>
+
+      <section class="about-panel" id="science">
+        <p class="eyebrow">About the publication</p>
+        <h2>Journalism with purpose.</h2>
+        <p>Introduce your newsroom, its mission, editorial standards, and the people behind the stories.</p>
+      </section>
+    </div>
+
+    <!-- ---------- FOOTER: UPDATE COPYRIGHT AND CONTACT ADDRESS ---------- -->
+    <footer class="site-footer">
+      <div>
+        <div class="footer-brand">THE CURRENT.</div>
+        <div>© 2026 The Current. All rights reserved.</div>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Back to top ↑</a>
+        <a href="#opinion">About</a>
+        <a href="mailto:yournewsroom@example.com">Contact</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
