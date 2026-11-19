@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Article Interactions</title>
+
+<style>
+:root {
+    --primary: #df571d;
+    --accent: #70b8b0;
+    --surface: #202727;
+    --border: rgba(255,255,255,0.14);
+    --text: #f5f2ef;
+    --muted: #b9c1be;
+}
+
+.article-actions,
+.comments-section {
+    margin-top: 35px;
+    padding: 25px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+.action-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.article-actions button {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 10px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.article-actions button:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.article-actions button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.comment-heading h2 {
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.comment-count,
+.comment-note {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.giscus {
+    margin-top: 20px;
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ARTICLE ACTIONS -->
+<section class="article-actions" aria-label="Article interactions">
+    <div class="action-top">
+        <strong>Save or share this story.</strong>
+
+        <div class="action-buttons">
+            <button type="button" id="bookmark-btn"
+                    aria-pressed="false">
+                ☆ Save article
+            </button>
+
+            <button type="button" id="share-btn">
+                ↗ Share
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- GISCUS COMMENTS -->
+<section class="comments-section" id="comments">
+
+    <div class="comment-heading">
+        <h2>Join the Conversation</h2>
+
+        <span class="comment-count">
+            Comments powered by GitHub Discussions
+        </span>
+    </div>
+
+    <p class="comment-note">
+        Share your thoughts respectfully.
+        Sign in with GitHub to join the discussion.
+    </p>
+
+    <div class="giscus"></div>
+
+    <script src="https://giscus.app/client.js"
+        data-repo="Mcflurry1023/mcflurry1023.github.com"
+        data-repo-id="R_kgDOVt3sSg"
+        data-category="General"
+        data-category-id="DIC_kwDOVt3sSs4DLfCp"
+        data-mapping="specific"
+        data-term="articlecard1"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+    </script>
+
+</section>
+
+<!-- INTERACTION JAVASCRIPT -->
+<script>
+const bookmarkBtn = document.getElementById("bookmark-btn");
+const shareBtn = document.getElementById("share-btn");
+
+const articleID = location.pathname;
+
+let bookmarks = [];
+
+try {
+    bookmarks = JSON.parse(
+        localStorage.getItem("bookmarks") || "[]"
+    );
+} catch (error) {
+    console.warn("Local storage unavailable.");
+}
+
+function updateBookmark() {
+    const saved = bookmarks.includes(articleID);
+
+    bookmarkBtn.textContent = saved
+        ? "★ Saved"
+        : "☆ Save article";
+
+    bookmarkBtn.setAttribute(
+        "aria-pressed",
+        String(saved)
+    );
+}
+
+bookmarkBtn.addEventListener("click", () => {
+    if (bookmarks.includes(articleID)) {
+        bookmarks = bookmarks.filter(
+            id => id !== articleID
+        );
+    } else {
+        bookmarks.push(articleID);
+    }
+
+    try {
+        localStorage.setItem(
+            "bookmarks",
+            JSON.stringify(bookmarks)
+        );
+    } catch (error) {
+        console.warn("Could not save bookmark.");
+    }
+
+    updateBookmark();
+});
+
+shareBtn.addEventListener("click", async () => {
+    try {
+        if (navigator.share) {
+            await navigator.share({
+                title: document.title,
+                url: location.href
+            });
+        } else if (navigator.clipboard) {
+            await navigator.clipboard.writeText(
+                location.href
+            );
+
+            shareBtn.textContent = "✓ Link copied";
+        } else {
+            window.prompt(
+                "Copy this article link:",
+                location.href
+            );
+        }
+    } catch (error) {
+        if (error.name !== "AbortError") {
+            window.prompt(
+                "Copy this article link:",
+                location.href
+            );
+        }
+    }
+});
+
+updateBookmark();
+</script>
+
+</body>
+</html>
