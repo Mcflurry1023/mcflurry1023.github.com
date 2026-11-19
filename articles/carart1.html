@@ -565,6 +565,107 @@ body {
   .main-nav { justify-content: flex-start; gap: 18px; }
 }
 
+
+
+/* ARTICLE INTERACTIONS */
+.article-actions {
+    max-width: 720px;
+    margin: 35px auto 25px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+.action-top, .reaction-list, .comment-heading, .comment-tools {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.action-top { justify-content: space-between; }
+.action-buttons { display: flex; gap: 9px; flex-wrap: wrap; }
+.article-actions button, .comments-section button {
+    font: inherit;
+    letter-spacing: normal;
+    text-transform: none;
+    font-size: .85rem;
+    font-weight: 700;
+    padding: 9px 13px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--surface-dark);
+    color: var(--text);
+}
+.article-actions button:hover, .comments-section button:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+.article-actions button.active, .reaction-button.active {
+    background: color-mix(in srgb, var(--accent) 25%, var(--surface));
+    border-color: var(--accent);
+}
+.reaction-title { margin: 20px 0 10px; font-size: .82rem; color: var(--muted); }
+.reaction-button { display: inline-flex; align-items: center; gap: 7px; }
+.reaction-button .emoji { font-size: 1.25rem; }
+.reaction-count { font-size: .78rem; color: var(--muted); }
+.comments-section {
+    max-width: 720px;
+    margin: 45px auto 60px;
+}
+.comment-heading {
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+.comment-heading h2 {
+    margin: 0;
+    font: 700 1.8rem Georgia, "Times New Roman", serif;
+}
+.comment-count { color: var(--muted); font-size: .85rem; }
+.comment-form {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    margin-bottom: 22px;
+}
+.comment-form label { display: block; font-size: .8rem; font-weight: 700; margin: 10px 0 5px; }
+.comment-form input, .comment-form textarea {
+    width: 100%;
+    padding: 11px 12px;
+    color: var(--text);
+    background: var(--background-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font: inherit;
+}
+.comment-form textarea { min-height: 100px; resize: vertical; }
+.comment-form button { margin-top: 12px; background: var(--primary); color: #241b18; border: 0; }
+.comment-note { color: var(--muted); font-size: .72rem; margin: 8px 0 0; }
+.comment-list { display: grid; gap: 13px; }
+.comment {
+    padding: 15px 17px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 9px;
+}
+.comment-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.comment-name { font-weight: 800; font-size: .88rem; }
+.comment-date { color: var(--muted); font-size: .72rem; }
+.comment-text { margin: 8px 0 0; overflow-wrap: anywhere; }
+.comment-delete {
+    padding: 4px 8px !important;
+    font-size: .72rem !important;
+    color: var(--muted) !important;
+}
+.no-comments { color: var(--muted); font-size: .9rem; text-align: center; padding: 22px; }
+@media (max-width: 500px) {
+    .article-actions { padding: 15px; }
+    .action-top { align-items: flex-start; }
+    .comment-heading h2 { font-size: 1.5rem; }
+}
+
 </style>
 </head>
 
@@ -733,6 +834,48 @@ body {
             <span>News</span>
         </div>
 
+
+        <!-- REACTIONS, SHARE AND BOOKMARK -->
+        <section class="article-actions" aria-label="Article interactions">
+            <div class="action-top">
+                <strong>What do you think about this story?</strong>
+                <div class="action-buttons">
+                    <button type="button" id="bookmark-btn" aria-pressed="false">☆ Save article</button>
+                    <button type="button" id="share-btn">↗ Share</button>
+                </div>
+            </div>
+            <p class="reaction-title">React to this article</p>
+            <div class="reaction-list" id="reaction-list">
+                <button class="reaction-button" type="button" data-reaction="like" aria-pressed="false"><span class="emoji">👍</span> Like <span class="reaction-count" id="count-like">0</span></button>
+                <button class="reaction-button" type="button" data-reaction="love" aria-pressed="false"><span class="emoji">❤️</span> Love <span class="reaction-count" id="count-love">0</span></button>
+                <button class="reaction-button" type="button" data-reaction="insightful" aria-pressed="false"><span class="emoji">💡</span> Insightful <span class="reaction-count" id="count-insightful">0</span></button>
+                <button class="reaction-button" type="button" data-reaction="surprised" aria-pressed="false"><span class="emoji">😮</span> Surprised <span class="reaction-count" id="count-surprised">0</span></button>
+            </div>
+            <p class="comment-note" id="reaction-note" aria-live="polite">Reactions are saved in this browser.</p>
+        </section>
+
+        <!-- COMMENTS -->
+        <section class="comments-section" id="comments">
+            <div class="comment-heading">
+                <h2>Join the Conversation</h2>
+                <span class="comment-count"><span id="comment-count">0</span> comments</span>
+            </div>
+            <form class="comment-form" id="comment-form">
+                <strong>Leave a comment</strong>
+                <label for="comment-name">Display name</label>
+                <input id="comment-name" name="name" maxlength="40" placeholder="Your name" required>
+                <label for="comment-message">Your comment</label>
+                <textarea id="comment-message" name="message" maxlength="1000" placeholder="Share your thoughts respectfully..." required></textarea>
+                <div class="comment-tools">
+                    <button type="submit">Post comment</button>
+                </div>
+                <p class="comment-note">Please keep comments respectful. Comments are stored only in this browser and are not visible to other readers.</p>
+            </form>
+            <div class="comment-list" id="comment-list" aria-live="polite">
+                <p class="no-comments">No comments yet. Start the conversation.</p>
+            </div>
+        </section>
+
     </article>
 
     <!-- RELATED ARTICLES -->
@@ -817,6 +960,120 @@ toggleBtn.addEventListener('click', () => {
         toggleBtn.textContent = 'Switch to Light Mode';
     }
 });
+
+// ARTICLE INTERACTIONS (browser-local demo; no server required)
+(() => {
+    const articleKey = location.pathname;
+    const storageKey = (name) => `the-current:${name}:${articleKey}`;
+
+    // Reactions: one reaction per browser for this article.
+    const reactionButtons = document.querySelectorAll('.reaction-button');
+    let reactionState = JSON.parse(localStorage.getItem(storageKey('reactions')) || '{"counts":{"like":0,"love":0,"insightful":0,"surprised":0},"mine":null}');
+    function renderReactions() {
+        reactionButtons.forEach(button => {
+            const type = button.dataset.reaction;
+            document.getElementById(`count-${type}`).textContent = reactionState.counts[type] || 0;
+            const active = reactionState.mine === type;
+            button.classList.toggle('active', active);
+            button.setAttribute('aria-pressed', String(active));
+        });
+    }
+    reactionButtons.forEach(button => button.addEventListener('click', () => {
+        const type = button.dataset.reaction;
+        if (reactionState.mine === type) {
+            reactionState.counts[type] = Math.max(0, (reactionState.counts[type] || 0) - 1);
+            reactionState.mine = null;
+            document.getElementById('reaction-note').textContent = 'Your reaction was removed.';
+        } else {
+            if (reactionState.mine) reactionState.counts[reactionState.mine] = Math.max(0, (reactionState.counts[reactionState.mine] || 0) - 1);
+            reactionState.counts[type] = (reactionState.counts[type] || 0) + 1;
+            reactionState.mine = type;
+            document.getElementById('reaction-note').textContent = 'Thanks for reacting to this story!';
+        }
+        localStorage.setItem(storageKey('reactions'), JSON.stringify(reactionState));
+        renderReactions();
+    }));
+    renderReactions();
+
+    // Bookmark.
+    const bookmarkBtn = document.getElementById('bookmark-btn');
+    const bookmarkKey = storageKey('bookmark');
+    let bookmarked = localStorage.getItem(bookmarkKey) === 'true';
+    function renderBookmark() {
+        bookmarkBtn.textContent = bookmarked ? '★ Saved' : '☆ Save article';
+        bookmarkBtn.classList.toggle('active', bookmarked);
+        bookmarkBtn.setAttribute('aria-pressed', String(bookmarked));
+    }
+    bookmarkBtn.addEventListener('click', () => {
+        bookmarked = !bookmarked;
+        localStorage.setItem(bookmarkKey, String(bookmarked));
+        renderBookmark();
+    });
+    renderBookmark();
+
+    // Share.
+    document.getElementById('share-btn').addEventListener('click', async () => {
+        const shareData = { title: document.title, text: document.querySelector('.article-title')?.textContent.trim(), url: location.href };
+        try {
+            if (navigator.share) await navigator.share(shareData);
+            else {
+                await navigator.clipboard.writeText(location.href);
+                alert('Article link copied!');
+            }
+        } catch (error) {
+            if (error.name !== 'AbortError') alert('Unable to share automatically. Copy the page URL from your browser.');
+        }
+    });
+
+    // Comments are intentionally local to this browser; use a backend for public comments.
+    const form = document.getElementById('comment-form');
+    const list = document.getElementById('comment-list');
+    const count = document.getElementById('comment-count');
+    const commentsKey = storageKey('comments');
+    let comments = JSON.parse(localStorage.getItem(commentsKey) || '[]');
+
+    function renderComments() {
+        list.replaceChildren();
+        count.textContent = comments.length;
+        if (!comments.length) {
+            const empty = document.createElement('p');
+            empty.className = 'no-comments';
+            empty.textContent = 'No comments yet. Start the conversation.';
+            list.appendChild(empty);
+            return;
+        }
+        comments.slice().reverse().forEach(comment => {
+            const card = document.createElement('article');
+            card.className = 'comment';
+            const meta = document.createElement('div');
+            meta.className = 'comment-meta';
+            const name = document.createElement('span');
+            name.className = 'comment-name';
+            name.textContent = comment.name;
+            const date = document.createElement('span');
+            date.className = 'comment-date';
+            date.textContent = comment.date;
+            meta.append(name, date);
+            const message = document.createElement('p');
+            message.className = 'comment-text';
+            message.textContent = comment.message;
+            card.append(meta, message);
+            list.appendChild(card);
+        });
+    }
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        const name = document.getElementById('comment-name').value.trim();
+        const message = document.getElementById('comment-message').value.trim();
+        if (!name || !message) return;
+        comments.push({ name, message, date: new Date().toLocaleString() });
+        localStorage.setItem(commentsKey, JSON.stringify(comments));
+        form.reset();
+        renderComments();
+    });
+    renderComments();
+})();
+
 </script>
 
 </body>
