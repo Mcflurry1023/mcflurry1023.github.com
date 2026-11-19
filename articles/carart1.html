@@ -801,26 +801,18 @@ body {
         </div>
 
 
-        <!-- REACTIONS, SHARE AND BOOKMARK -->
+        <!-- reactions, share, comments, bookmark, etc. -->
         <section class="article-actions" aria-label="Article interactions">
             <div class="action-top">
-                <strong>What do you think about this story?</strong>
+                <strong>Save or share this story, or react below.</strong>
                 <div class="action-buttons">
                     <button type="button" id="bookmark-btn" aria-pressed="false">☆ Save article</button>
                     <button type="button" id="share-btn">↗ Share</button>
                 </div>
             </div>
-            <p class="reaction-title">React to this article</p>
-            <div class="reaction-list" id="reaction-list">
-                <button class="reaction-button" type="button" data-reaction="like" aria-pressed="false"><span class="emoji">👍</span> Like <span class="reaction-count" id="count-like">0</span></button>
-                <button class="reaction-button" type="button" data-reaction="love" aria-pressed="false"><span class="emoji">❤️</span> Love <span class="reaction-count" id="count-love">0</span></button>
-                <button class="reaction-button" type="button" data-reaction="insightful" aria-pressed="false"><span class="emoji">💡</span> Insightful <span class="reaction-count" id="count-insightful">0</span></button>
-                <button class="reaction-button" type="button" data-reaction="surprised" aria-pressed="false"><span class="emoji">😮</span> Surprised <span class="reaction-count" id="count-surprised">0</span></button>
-            </div>
-            <p class="comment-note" id="reaction-note" aria-live="polite">Reactions are saved in this browser.</p>
         </section>
 
-        <!-- PUBLIC COMMENTS: GISCUS -->
+        <!-- giscus public comments -->
         <section class="comments-section" id="comments">
             <div class="comment-heading">
                 <h2>Join the Conversation</h2>
@@ -830,13 +822,7 @@ body {
                 Share your thoughts respectfully. Sign in with GitHub to join the discussion.
             </p>
             <div class="giscus"></div>
-            <!--
-              GISCUS SETUP:
-              1. Enable Discussions in your GitHub repository.
-              2. Visit https://giscus.app and select your repository and a Discussion category.
-              3. Copy the generated repo, repo-id, category, and category-id values below.
-              4. Replace the four YOUR_... placeholders in the script attributes.
-            -->
+            <!-- giscus setup -->
             <script src="https://giscus.app/client.js"
                     data-repo="Mcflurry1023/mcflurry1023.github.com"
                     data-repo-id="R_kgDOVt3sSg"
@@ -856,12 +842,12 @@ body {
 
     </article>
 
-    <!-- RELATED ARTICLES -->
+    <!-- related articles -->
 
     <section class="related-section">
 
         <div class="section-heading">
-            <h2>Related Stories</h2>
+            <h2>More Stories</h2>
         </div>
 
         <div class="related-grid">
@@ -869,24 +855,24 @@ body {
             <a href="article2.html" class="related-card">
                 <img src="../images/related1.jpg" alt="Related story 1">
                 <div class="related-content">
-                    <small>National</small>
-                    <h3>Another Related News Headline</h3>
+                    <small>type</small>
+                    <h3>headline</h3>
                 </div>
             </a>
 
             <a href="article3.html" class="related-card">
                 <img src="../images/related2.jpg" alt="Related story 2">
                 <div class="related-content">
-                    <small>Local</small>
-                    <h3>Another Story Worth Reading</h3>
+                    <small>type</small>
+                    <h3>headline</h3>
                 </div>
             </a>
 
             <a href="article4.html" class="related-card">
                 <img src="../images/related3.jpg" alt="Related story 3">
                 <div class="related-content">
-                    <small>Science</small>
-                    <h3>Latest Developments in Science</h3>
+                    <small>type</small>
+                    <h3>headline</h3>
                 </div>
             </a>
 
@@ -898,7 +884,9 @@ body {
 
     <footer class="site-footer">
         <div>
-            <div class="footer-brand">THE CURRENT</div>
+            <div class="footer-brand">
+                  <img src="../logo.png">
+            </div>
             <div>© 2026 The Current. All rights reserved.</div>
         </div>
 
