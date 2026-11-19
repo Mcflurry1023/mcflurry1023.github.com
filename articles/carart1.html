@@ -623,43 +623,9 @@ body {
     font: 700 1.8rem Georgia, "Times New Roman", serif;
 }
 .comment-count { color: var(--muted); font-size: .85rem; }
-.comment-form {
-    padding: 18px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface);
-    margin-bottom: 22px;
-}
-.comment-form label { display: block; font-size: .8rem; font-weight: 700; margin: 10px 0 5px; }
-.comment-form input, .comment-form textarea {
-    width: 100%;
-    padding: 11px 12px;
-    color: var(--text);
-    background: var(--background-2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font: inherit;
-}
-.comment-form textarea { min-height: 100px; resize: vertical; }
-.comment-form button { margin-top: 12px; background: var(--primary); color: #241b18; border: 0; }
+.giscus-intro { margin: 0 0 16px; }
+.giscus { width: 100%; }
 .comment-note { color: var(--muted); font-size: .72rem; margin: 8px 0 0; }
-.comment-list { display: grid; gap: 13px; }
-.comment {
-    padding: 15px 17px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    border-radius: 9px;
-}
-.comment-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.comment-name { font-weight: 800; font-size: .88rem; }
-.comment-date { color: var(--muted); font-size: .72rem; }
-.comment-text { margin: 8px 0 0; overflow-wrap: anywhere; }
-.comment-delete {
-    padding: 4px 8px !important;
-    font-size: .72rem !important;
-    color: var(--muted) !important;
-}
-.no-comments { color: var(--muted); font-size: .9rem; text-align: center; padding: 22px; }
 @media (max-width: 500px) {
     .article-actions { padding: 15px; }
     .action-top { align-items: flex-start; }
@@ -854,26 +820,38 @@ body {
             <p class="comment-note" id="reaction-note" aria-live="polite">Reactions are saved in this browser.</p>
         </section>
 
-        <!-- COMMENTS -->
+        <!-- PUBLIC COMMENTS: GISCUS -->
         <section class="comments-section" id="comments">
             <div class="comment-heading">
                 <h2>Join the Conversation</h2>
-                <span class="comment-count"><span id="comment-count">0</span> comments</span>
+                <span class="comment-count">Comments powered by GitHub Discussions</span>
             </div>
-            <form class="comment-form" id="comment-form">
-                <strong>Leave a comment</strong>
-                <label for="comment-name">Display name</label>
-                <input id="comment-name" name="name" maxlength="40" placeholder="Your name" required>
-                <label for="comment-message">Your comment</label>
-                <textarea id="comment-message" name="message" maxlength="1000" placeholder="Share your thoughts respectfully..." required></textarea>
-                <div class="comment-tools">
-                    <button type="submit">Post comment</button>
-                </div>
-                <p class="comment-note">Please keep comments respectful. Comments are stored only in this browser and are not visible to other readers.</p>
-            </form>
-            <div class="comment-list" id="comment-list" aria-live="polite">
-                <p class="no-comments">No comments yet. Start the conversation.</p>
-            </div>
+            <p class="comment-note giscus-intro">
+                Share your thoughts respectfully. Sign in with GitHub to join the discussion.
+            </p>
+            <div class="giscus"></div>
+            <!--
+              GISCUS SETUP:
+              1. Enable Discussions in your GitHub repository.
+              2. Visit https://giscus.app and select your repository and a Discussion category.
+              3. Copy the generated repo, repo-id, category, and category-id values below.
+              4. Replace the four YOUR_... placeholders in the script attributes.
+            -->
+            <script src="https://giscus.app/client.js"
+                    data-repo="Mcflurry1023/mcflurry1023.github.com"
+                    data-repo-id="R_kgDOVt3sSg"
+                    data-category="General"
+                    data-category-id="DIC_kwDOVt3sSs4DLfCp"
+                    data-mapping="pathname"
+                    data-strict="0"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="bottom"
+                    data-theme="preferred_color_scheme"
+                    data-lang="en"
+                    crossorigin="anonymous"
+                    async>
+            </script>
         </section>
 
     </article>
@@ -1025,53 +1003,7 @@ toggleBtn.addEventListener('click', () => {
         }
     });
 
-    // Comments are intentionally local to this browser; use a backend for public comments.
-    const form = document.getElementById('comment-form');
-    const list = document.getElementById('comment-list');
-    const count = document.getElementById('comment-count');
-    const commentsKey = storageKey('comments');
-    let comments = JSON.parse(localStorage.getItem(commentsKey) || '[]');
-
-    function renderComments() {
-        list.replaceChildren();
-        count.textContent = comments.length;
-        if (!comments.length) {
-            const empty = document.createElement('p');
-            empty.className = 'no-comments';
-            empty.textContent = 'No comments yet. Start the conversation.';
-            list.appendChild(empty);
-            return;
-        }
-        comments.slice().reverse().forEach(comment => {
-            const card = document.createElement('article');
-            card.className = 'comment';
-            const meta = document.createElement('div');
-            meta.className = 'comment-meta';
-            const name = document.createElement('span');
-            name.className = 'comment-name';
-            name.textContent = comment.name;
-            const date = document.createElement('span');
-            date.className = 'comment-date';
-            date.textContent = comment.date;
-            meta.append(name, date);
-            const message = document.createElement('p');
-            message.className = 'comment-text';
-            message.textContent = comment.message;
-            card.append(meta, message);
-            list.appendChild(card);
-        });
-    }
-    form.addEventListener('submit', event => {
-        event.preventDefault();
-        const name = document.getElementById('comment-name').value.trim();
-        const message = document.getElementById('comment-message').value.trim();
-        if (!name || !message) return;
-        comments.push({ name, message, date: new Date().toLocaleString() });
-        localStorage.setItem(commentsKey, JSON.stringify(comments));
-        form.reset();
-        renderComments();
-    });
-    renderComments();
+    // Public comments are handled by the Giscus embed above.
 })();
 
 </script>
